@@ -1,7 +1,30 @@
-node_modules/
 .env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Node
+node_modules/
+package-lock.json
+
+# Logs
 *.log
-.DS_Store
+logs/
+
+# Archivos temporales
+*.tmp
+temp/
+tmp/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Editor
+.vscode/
+.idea/
+
+# Build
 dist/
 build/
-coverage/

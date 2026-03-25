@@ -1,10 +1,8 @@
-import User from "../models/User.model.js";
-import Cart from "../models/Cart.model.js";
-import { createHash } from "../utils/bcrypt.js";
+import UserService from "../services/user.service.js";
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password").populate("cart");
+    const users = await UserService.getAllUsers();
 
     res.json({
       status: "success",
@@ -24,83 +22,35 @@ export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const user = await User.findById(id)
-      .select("-password")
-      .populate({
-        path: "cart",
-        populate: {
-          path: "products.product",
-        },
-      });
-
-    if (!user) {
-      return res.status(404).json({
-        status: "error",
-        message: "Usuario no encontrado",
-      });
-    }
+    const user = await UserService.getUserById(id);
 
     res.json({
       status: "success",
       user,
     });
   } catch (error) {
-    res.status(500).json({
+    const statusCode = error.message === "Usuario no encontrado" ? 404 : 500;
+    res.status(statusCode).json({
       status: "error",
-      message: "Error al obtener usuario",
-      error: error.message,
+      message: error.message,
     });
   }
 };
 
 export const createUser = async (req, res) => {
   try {
-    const { first_name, last_name, email, age, password, role } = req.body;
-
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({
-        status: "error",
-        message: "El email ya está registrado",
-      });
-    }
-
-    if (!first_name || !last_name || !email || !age || !password) {
-      return res.status(400).json({
-        status: "error",
-        message: "Faltan campos obligatorios",
-      });
-    }
-
-    const newCart = await Cart.create({ products: [] });
-
-    const newUser = await User.create({
-      first_name,
-      last_name,
-      email,
-      age,
-      password: createHash(password),
-      cart: newCart._id,
-      role: role || "user",
-    });
-
-    newCart.user = newUser._id;
-    await newCart.save();
-
-    const userResponse = await User.findById(newUser._id)
-      .select("-password")
-      .populate("cart");
+    const user = await UserService.createUser(req.body);
 
     res.status(201).json({
       status: "success",
       message: "Usuario creado exitosamente",
-      user: userResponse,
+      user,
     });
   } catch (error) {
-    res.status(500).json({
+    const statusCode = error.message.includes("ya está registrado") ? 400 : 500;
+    res.status(statusCode).json({
       status: "error",
-      message: "Error al crear usuario",
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -108,52 +58,23 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const updates = req.body;
-
-    delete updates.cart;
-
-    if (updates.password) {
-      updates.password = createHash(updates.password);
-    }
-
-    if (updates.email) {
-      const existingUser = await User.findOne({
-        email: updates.email,
-        _id: { $ne: id },
-      });
-
-      if (existingUser) {
-        return res.stauts(400).json({
-          status: "error",
-          message: "El email ya está en uso",
-        });
-      }
-    }
-
-    const updatedUser = await User.findByIdAndUpdate(id, updates, {
-      new: true,
-      runValidators: true,
-    })
-      .select("-password")
-      .populate("cart");
-
-    if (!updatedUser) {
-      return res.status(404).json({
-        status: "error",
-        message: "Usuario no encontrado",
-      });
-    }
+    const user = await UserService.updateUser(id, req.body);
 
     res.json({
-      status: "success",
-      message: "Usuario actualizado exitosamente",
-      user: updatedUser,
+      stauts: "success",
+      message: "Usuario actaulizado exitosamente",
+      user,
     });
   } catch (error) {
-    res.status(500).json({
-      status: "error",
-      message: "Error al actualizar usuario",
-      error: error.message,
+    const statusCode =
+      error.message === "Usuario no encontrado"
+        ? 404
+        : error.message.includes("ya está en uso")
+          ? 400
+          : 500;
+    res.status(statusCode).json({
+      stauts: "error",
+      message: error.message,
     });
   }
 };
@@ -162,27 +83,15 @@ export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const user = await User.findById(id);
-
-    if (!user) {
-      return res.status(404).json({
-        status: "error",
-        message: "Usuario no encontrado",
-      });
-    }
-
-    if (user.cart) {
-      await Cart.findByIdAndDelete(user.cart);
-    }
-
-    await User.findByIdAndDelete(id);
+    const result = await UserService.deleteUser(id);
 
     res.json({
       status: "success",
-      message: "Usuario eliminado exitosamente",
+      message: result.message,
     });
   } catch (error) {
-    res.stauts(500).json({
+    const statusCode = error.message === "Usuario no encontrado" ? 404 : 500;
+    res.stauts(statusCode).json({
       status: "error",
       message: "Error al eliminar usuario",
       error: error.message,
@@ -195,38 +104,23 @@ export const changeUserRole = async (req, res) => {
     const { id } = req.params;
     const { role } = req.body;
 
-    if (!["user", "admin", "premium"].includes(role)) {
-      return res.status(400).json({
-        status: "error",
-        message: "Rol inválido. Debe ser: user, admin o premium",
-      });
-    }
-
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      { role },
-      { new: true, runValidators: true },
-    )
-      .select("-password")
-      .populate("cart");
-
-    if (!updatedUser) {
-      return res.status(404).json({
-        status: "error",
-        message: "Usuario no encontrado",
-      });
-    }
+    const user = await UserService.changeUserRole(id, role);
 
     res.json({
       status: "success",
       message: "Rol actualizado exitosamente",
-      user: updatedUser,
+      user,
     });
   } catch (error) {
-    res.status(500).json({
+    const statusCode =
+      error.message === "Usuario no encontrado"
+        ? 404
+        : error.message.includes("Rol inválido")
+          ? 400
+          : 500;
+    res.status(statusCode).json({
       status: "error",
-      message: "Error al cambiar rol",
-      error: error.message,
+      message: error.message,
     });
   }
 };

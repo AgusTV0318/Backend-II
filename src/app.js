@@ -7,6 +7,8 @@ import sessionsRoutes from "./routes/sessions.routes.js";
 import usersRoutes from "./routes/users.routes.js";
 import productsRoutes from "./routes/products.routes.js";
 import cartsRoutes from "./routes/carts.routes.js";
+import passwordResetRoutes from "./routes/passwordReset.routes.js";
+import ticketsRoutes from "./routes/ticket.routes.js";
 
 dotenv.config();
 
@@ -18,6 +20,8 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use("/api/password-reset", passwordResetRoutes);
+app.use("/api/tickets", ticketsRoutes);
 
 app.use(passport.initialize());
 

@@ -99,6 +99,22 @@ const usersData = [
     password: "password123",
     role: "premium",
   },
+  {
+    first_name: "Carlos",
+    last_name: "López",
+    email: "carlos@example.com",
+    age: 35,
+    password: "password123",
+    role: "user",
+  },
+  {
+    first_name: "Ana",
+    last_name: "Martínez",
+    email: "ana@example.com",
+    age: 27,
+    password: "password123",
+    role: "premium",
+  },
 ];
 
 const seedDatabase = async () => {
@@ -146,6 +162,10 @@ const seedDatabase = async () => {
     userCart.products.push({
       product: products[2]._id,
       quantity: 2,
+    });
+    userCart.products.push({
+      product: products[5]._id,
+      quantity: 1,
     });
     await userCart.save();
     console.log("✅ Productos agregados\n");

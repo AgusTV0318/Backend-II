@@ -33,7 +33,7 @@ export const authorize = (...allowedRoles) => {
       });
     }
 
-    if (!allowedRoles.includes(req.user.roles)) {
+    if (!allowedRoles.includes(req.user.role)) {
       return res.status(403).json({
         status: "error",
         message: "No tienes permisos para acceder a este recurso",
@@ -70,8 +70,68 @@ export const authenticateCurrent = (req, res, next) => {
   })(req, res, next);
 };
 
+export const onlyAdminCanManageProducts = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({
+      status: "error",
+      message: "Debes iniciar sesión para realizar esta acción",
+      error: "Unauthorized",
+    });
+  }
+
+  if (req.user.role !== "admin") {
+    return res.status(403).json({
+      status: "error",
+      message:
+        "Solo los administradores pueden crear, actualizar o eliminar productos",
+      error: "Forbidden",
+      userRole: req.user.role,
+    });
+  }
+
+  next();
+};
+
+export const onlyUserCanAddToCart = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({
+      status: "error",
+      message: "Debes iniciar sesión para agregar productos al carrito",
+      error: "Unauthorized",
+    });
+  }
+
+  if (!["user", "premium"].includes(req.user.role)) {
+    return res.status(403).json({
+      status: "error",
+      message: "Solo los usuarios pueden agregar productos al carrito",
+      error: "Forbidden",
+      userRole: req.user.role,
+    });
+  }
+
+  next();
+};
+
+export const verifyCartOwnership = async (req, res, next) => {
+  const { cid } = req.params;
+
+  if (req.user.cart.toString() !== cid) {
+    return res.status(403).json({
+      status: "error",
+      message: "No puedes modificar un carrito que no te pertenece",
+      error: "Forbidden",
+    });
+  }
+
+  next();
+};
+
 export default {
   authenticateJWT,
   authorize,
   authenticateCurrent,
+  onlyAdminCanManageProducts,
+  onlyUserCanAddToCart,
+  verifyCartOwnership,
 };

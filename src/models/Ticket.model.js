@@ -8,8 +8,8 @@ const ticketSchema = new mongoose.Schema(
       unique: true,
       uppercase: true,
     },
-    purcharse_datetime: {
-      type: DataTransfer,
+    purchase_datetime: {
+      type: Date,
       default: Date.now,
       required: true,
     },
@@ -18,7 +18,7 @@ const ticketSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
-    punchaser: {
+    purchaser: {
       type: String,
       required: true,
       trim: true,

@@ -1,4 +1,4 @@
-import { getTransporter } from "../services/email.config.js";
+import { getTransporter } from "../config/email.config.js";
 import dotenv from "dotenv";
 
 dotenv.config();

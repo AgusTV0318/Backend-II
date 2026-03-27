@@ -8,7 +8,7 @@ E-commerce profesional de televisores con autenticación JWT, sistema de tickets
 
 ---
 
-## ✨ Características
+## Características
 
 ### Arquitectura Profesional
 

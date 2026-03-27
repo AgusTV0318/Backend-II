@@ -14,7 +14,8 @@ const MONGODB_URI =
 const productsData = [
   {
     title: 'Samsung QLED 55" 4K',
-    description: "Televisor QLED con tecnología Quantum Dot",
+    description:
+      "Televisor QLED con tecnología Quantum Dot para colores vibrantes y realistas. Smart TV con Tizen OS.",
     code: "SAM-QLED-55",
     price: 899.99,
     stock: 25,
@@ -22,11 +23,12 @@ const productsData = [
     brand: "Samsung",
     size: "55 pulgadas",
     resolution: "4K UHD",
-    thumbnails: ["https://example.com/samsung-qled-55.jpg"],
+    thumbnails: ["https://images.samsung.com/qled-55.jpg"],
   },
   {
     title: 'LG OLED 65" 4K',
-    description: "Televisor OLED con negros perfectos",
+    description:
+      "Televisor OLED con negros perfectos y HDR Dolby Vision. Procesador α9 Gen 6 AI.",
     code: "LG-OLED-65",
     price: 1599.99,
     stock: 15,
@@ -34,11 +36,12 @@ const productsData = [
     brand: "LG",
     size: "65 pulgadas",
     resolution: "4K UHD",
-    thumbnails: ["https://example.com/lg-oled-65.jpg"],
+    thumbnails: ["https://images.lg.com/oled-65.jpg"],
   },
   {
     title: 'Sony Bravia 55" 4K LED',
-    description: "Smart TV con Android TV",
+    description:
+      "Smart TV con Android TV y procesador X1 para calidad de imagen superior.",
     code: "SONY-LED-55",
     price: 749.99,
     stock: 30,
@@ -46,11 +49,11 @@ const productsData = [
     brand: "Sony",
     size: "55 pulgadas",
     resolution: "4K UHD",
-    thumbnails: ["https://example.com/sony-bravia-55.jpg"],
+    thumbnails: ["https://images.sony.com/bravia-55.jpg"],
   },
   {
     title: 'TCL 43" Smart TV',
-    description: "Smart TV económico con Roku",
+    description: "Smart TV económico con Roku TV integrado y HDR10.",
     code: "TCL-SMART-43",
     price: 299.99,
     stock: 50,
@@ -58,11 +61,11 @@ const productsData = [
     brand: "TCL",
     size: "43 pulgadas",
     resolution: "4K UHD",
-    thumbnails: ["https://example.com/tcl-smart-43.jpg"],
+    thumbnails: ["https://images.tcl.com/smart-43.jpg"],
   },
   {
     title: 'Samsung The Frame 55"',
-    description: "TV que se convierte en arte",
+    description: "TV que se convierte en arte cuando está apagado. QLED 4K.",
     code: "SAM-FRAME-55",
     price: 1299.99,
     stock: 10,
@@ -70,7 +73,92 @@ const productsData = [
     brand: "Samsung",
     size: "55 pulgadas",
     resolution: "4K UHD",
-    thumbnails: ["https://example.com/samsung-frame-55.jpg"],
+    thumbnails: ["https://images.samsung.com/frame-55.jpg"],
+  },
+  {
+    title: 'LG NanoCell 65" 4K',
+    description:
+      "Tecnología NanoCell para colores puros desde cualquier ángulo.",
+    code: "LG-NANO-65",
+    price: 999.99,
+    stock: 20,
+    category: "4K",
+    brand: "LG",
+    size: "65 pulgadas",
+    resolution: "4K UHD",
+    thumbnails: ["https://images.lg.com/nano-65.jpg"],
+  },
+  {
+    title: 'Sony A95K OLED 65" 4K',
+    description: "OLED QD de última generación con brillo excepcional.",
+    code: "SONY-OLED-65",
+    price: 2499.99,
+    stock: 8,
+    category: "OLED",
+    brand: "Sony",
+    size: "65 pulgadas",
+    resolution: "4K UHD",
+    thumbnails: ["https://images.sony.com/a95k-65.jpg"],
+  },
+  {
+    title: 'Samsung Neo QLED 8K 75"',
+    description: "Resolución 8K con Quantum Matrix Technology.",
+    code: "SAM-8K-75",
+    price: 3999.99,
+    stock: 5,
+    category: "8K",
+    brand: "Samsung",
+    size: "75 pulgadas",
+    resolution: "8K",
+    thumbnails: ["https://images.samsung.com/8k-75.jpg"],
+  },
+  {
+    title: 'Hisense U8H 65" ULED',
+    description: "ULED con Mini-LED y Dolby Vision IQ.",
+    code: "HIS-ULED-65",
+    price: 1099.99,
+    stock: 18,
+    category: "4K",
+    brand: "Hisense",
+    size: "65 pulgadas",
+    resolution: "4K UHD",
+    thumbnails: ["https://images.hisense.com/u8h-65.jpg"],
+  },
+  {
+    title: 'Philips OLED 55" Ambilight',
+    description: "OLED con tecnología Ambilight para inmersión total.",
+    code: "PHI-OLED-55",
+    price: 1399.99,
+    stock: 12,
+    category: "OLED",
+    brand: "Philips",
+    size: "55 pulgadas",
+    resolution: "4K UHD",
+    thumbnails: ["https://images.philips.com/oled-55.jpg"],
+  },
+  {
+    title: 'Xiaomi TV P1 43"',
+    description: "Android TV económico con excelente relación calidad-precio.",
+    code: "XIA-P1-43",
+    price: 349.99,
+    stock: 40,
+    category: "Smart TV",
+    brand: "Xiaomi",
+    size: "43 pulgadas",
+    resolution: "4K UHD",
+    thumbnails: ["https://images.xiaomi.com/p1-43.jpg"],
+  },
+  {
+    title: 'LG C3 OLED 77" 4K',
+    description: "OLED de gran tamaño ideal para home theater.",
+    code: "LG-C3-77",
+    price: 3299.99,
+    stock: 6,
+    category: "OLED",
+    brand: "LG",
+    size: "77 pulgadas",
+    resolution: "4K UHD",
+    thumbnails: ["https://images.lg.com/c3-77.jpg"],
   },
 ];
 
@@ -124,7 +212,7 @@ const seedDatabase = async () => {
     await mongoose.connect(MONGODB_URI);
     console.log("✅ Conectado a MongoDB\n");
 
-    console.log("🗑️  Limpiando colecciones...");
+    console.log("🗑️  Limpiando colecciones existentes...");
     await User.deleteMany({});
     await Cart.deleteMany({});
     await Product.deleteMany({});
@@ -151,7 +239,7 @@ const seedDatabase = async () => {
     }
     console.log("");
 
-    console.log("🛒 Agregando productos al carrito de prueba...");
+    console.log("🛒 Agregando productos a carritos de prueba...");
     const normalUser = await User.findOne({ email: "juan@example.com" });
     const userCart = await Cart.findById(normalUser.cart);
 
@@ -168,33 +256,76 @@ const seedDatabase = async () => {
       quantity: 1,
     });
     await userCart.save();
-    console.log("✅ Productos agregados\n");
+    console.log("✅ Productos agregados al carrito de Juan\n");
 
-    console.log("📊 RESUMEN:");
-    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-    console.log(`📺 Productos: ${products.length}`);
-    console.log(`👥 Usuarios: ${usersData.length}`);
-    console.log(`🛒 Carritos: ${usersData.length}`);
-    console.log("");
-
-    console.log("🔑 CREDENCIALES:");
-    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-    console.log("👑 Admin:");
-    console.log("   Email: admin@ecommerce.com");
-    console.log("   Password: admin123");
-    console.log("");
-    console.log("👤 Usuario Normal:");
-    console.log("   Email: juan@example.com");
-    console.log("   Password: password123");
-    console.log("");
-    console.log("⭐ Usuario Premium:");
-    console.log("   Email: maria@example.com");
-    console.log("   Password: password123");
-    console.log("");
-
-    console.log("✨ Seed completado!\n");
+    console.log(
+      "╔═══════════════════════════════════════════════════════════╗",
+    );
+    console.log(
+      "║                                                           ║",
+    );
+    console.log("║     📊 RESUMEN DE DATOS CREADOS                          ║");
+    console.log(
+      "║                                                           ║",
+    );
+    console.log(
+      "╠═══════════════════════════════════════════════════════════╣",
+    );
+    console.log(`║  📺 Productos: ${products.length.toString().padEnd(43)} ║`);
+    console.log(`║  👥 Usuarios: ${usersData.length.toString().padEnd(44)} ║`);
+    console.log(`║  🛒 Carritos: ${usersData.length.toString().padEnd(44)} ║`);
+    console.log(
+      "╠═══════════════════════════════════════════════════════════╣",
+    );
+    console.log(
+      "║                                                           ║",
+    );
+    console.log("║  🔑 CREDENCIALES DE ACCESO                               ║");
+    console.log(
+      "║                                                           ║",
+    );
+    console.log(
+      "╠═══════════════════════════════════════════════════════════╣",
+    );
+    console.log(
+      "║                                                           ║",
+    );
+    console.log("║  👑 Administrador:                                       ║");
+    console.log("║     Email: admin@ecommerce.com                           ║");
+    console.log("║     Password: admin123                                   ║");
+    console.log("║     Permisos: Acceso total                               ║");
+    console.log(
+      "║                                                           ║",
+    );
+    console.log("║  👤 Usuario Normal:                                      ║");
+    console.log("║     Email: juan@example.com                              ║");
+    console.log("║     Password: password123                                ║");
+    console.log("║     Carrito: Con 3 productos                             ║");
+    console.log(
+      "║                                                           ║",
+    );
+    console.log("║  ⭐ Usuario Premium:                                     ║");
+    console.log("║     Email: maria@example.com                             ║");
+    console.log("║     Password: password123                                ║");
+    console.log(
+      "║                                                           ║",
+    );
+    console.log(
+      "╠═══════════════════════════════════════════════════════════╣",
+    );
+    console.log(
+      "║                                                           ║",
+    );
+    console.log("║  ✨ Seed completado exitosamente!                        ║");
+    console.log("║  🚀 Inicia el servidor: npm run dev                      ║");
+    console.log(
+      "║                                                           ║",
+    );
+    console.log(
+      "╚═══════════════════════════════════════════════════════════╝\n",
+    );
   } catch (error) {
-    console.error("❌ Error:", error);
+    console.error("❌ Error en el seed:", error);
   } finally {
     await mongoose.connection.close();
     console.log("🔌 Conexión cerrada");

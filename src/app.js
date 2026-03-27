@@ -9,7 +9,7 @@ import usersRoutes from "./routes/users.routes.js";
 import productsRoutes from "./routes/products.routes.js";
 import cartsRoutes from "./routes/carts.routes.js";
 import passwordResetRoutes from "./routes/passwordReset.routes.js";
-import ticketsRoutes from "./routes/tickets.routes.js";
+import ticketsRoutes from "./routes/ticket.routes.js";
 
 dotenv.config();
 
@@ -63,8 +63,8 @@ app.get("/", (req, res) => {
         myTickets: "GET /api/tickets/my-tickets",
       },
     },
-    author: "Tu Nombre",
-    course: "Coderhouse Backend",
+    author: "Agustín Vozza",
+    course: "Coderhouse Backend II",
   });
 });
 

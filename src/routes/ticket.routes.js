@@ -5,8 +5,8 @@ import {
   getTicketById,
   getUserTickets,
   getAllTickets,
-} from "../controllers/tickets.controller.js";
-import { authenticateJWT, authorize } from "../middlewares/auth.middleware.js";
+} from "../controllers/ticket.controller.js";
+import { authenticateJWT, authorize } from "../middlewars/auth.middleware.js";
 
 const router = Router();
 

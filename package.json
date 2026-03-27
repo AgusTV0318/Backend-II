@@ -1,6 +1,6 @@
 {
   "name": "backend-2-cm-76985",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "src/app.js",
   "type": "module",
   "scripts": {
@@ -9,10 +9,16 @@
     "seed": "node scripts/seed.js"
   },
   "keywords": [
+    "ecommerce",
+    "nodejs",
+    "express",
+    "mongodb",
     "Backend",
     "tvs",
     "jwt",
-    "passport"
+    "passport",
+    "repository-pattern",
+    "dao-pattern"
   ],
   "author": "Agustín Vozza",
   "license": "ISC",
@@ -34,5 +40,9 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }

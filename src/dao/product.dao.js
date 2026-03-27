@@ -24,7 +24,13 @@ class ProductDAO {
       const query = { status: true, ...filters };
       const skip = (page - 1) * limit;
 
-      const products = await Product.countDocuments(query);
+      const total = await Product.countDocuments(query);
+
+      const products = await Product.find(query)
+        .sort(sort)
+        .skip(skip)
+        .limit(limit)
+        .lean();
 
       return {
         products,
@@ -33,6 +39,10 @@ class ProductDAO {
           page: Number(page),
           limit: Number(limit),
           totalPages: Math.ceil(total / limit),
+          hasPrevPage: page > 1,
+          hasNextPage: page < Math.ceil(total / limit),
+          prevPage: page > 1 ? page - 1 : null,
+          nextPage: page < Math.ceil(total / limit) ? page + 1 : null,
         },
       };
     } catch (error) {

@@ -31,47 +31,6 @@ E-commerce profesional de televisores con autenticación JWT, sistema de tickets
 
 ---
 
-## 🏗️ Arquitectura del Sistema
-
-┌─────────────┐
-│ Cliente │
-└──────┬──────┘
-│
-▼
-┌─────────────┐
-│ Routes │ ← Definición de endpoints
-└──────┬──────┘
-│
-▼
-┌─────────────┐
-│ Controllers │ ← Manejo de HTTP (request/response)
-└──────┬──────┘
-│
-▼
-┌─────────────┐
-│ Services │ ← Lógica de negocio
-└──────┬──────┘
-│
-▼
-┌─────────────┐
-│Repositories │ ← Abstracción de datos
-└──────┬──────┘
-│
-▼
-┌─────────────┐
-│ DAOs │ ← Operaciones de base de datos
-└──────┬──────┘
-│
-▼
-┌─────────────┐
-│ MongoDB │
-└─────────────┘
-┌──────────┐
-│ DTOs │ ← Transformación de datos
-└──────────┘
-
----
-
 ## 🚀 Instalación
 
 ### Requisitos Previos
@@ -255,32 +214,6 @@ Después de ejecutar `npm run seed`:
 
 - Email: `maria@example.com`
 - Password: `password123`
-
----
-
-## 📁 Estructura del Proyecto
-
-\`\`\`
-ecommerce-tvs/
-├── src/
-│ ├── config/ # Configuraciones (DB, Passport, Email)
-│ ├── dao/ # Data Access Objects
-│ ├── dto/ # Data Transfer Objects
-│ ├── repositories/ # Patrón Repository
-│ ├── services/ # Lógica de negocio
-│ ├── controllers/ # Controladores HTTP
-│ ├── middlewares/ # Middlewares (auth, etc.)
-│ ├── models/ # Modelos Mongoose
-│ ├── routes/ # Definición de rutas
-│ ├── utils/ # Utilidades (bcrypt, JWT)
-│ └── app.js # Aplicación principal
-├── scripts/
-│ └── seed.js # Script de datos de prueba
-├── .env.example # Variables de entorno ejemplo
-├── .gitignore
-├── package.json
-└── README.md
-\`\`\`
 
 ---
 

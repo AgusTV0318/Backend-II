@@ -1,85 +1,33 @@
-import passport from "passport";
-import { generateToken } from "../utils/jwt.js";
-import jwt from "jsonwebtoken";
+import UserService from "../services/user.service.js";
 
-export const register = (req, res, next) => {
-  passport.authenticate("register", { session: false }, (err, user, info) => {
-    if (err) {
-      return res.status(500).json({
-        status: "error",
-        message: "Error en el registro",
-        error: err.message,
-      });
-    }
+export const register = async (req, res, next) => {
+  try {
+    const result = await UserService.register(req.body);
 
-    if (!user) {
-      return res.status(400).json({
-        status: "error",
-        message: info?.message || "Error en el registro",
-      });
-    }
-
-    const token = generateToken({
-      id: user._id,
-      email: user.email,
-      role: user.role,
-    });
-
-    res.cookie("token", token, {
+    res.cookie("token", result.token, {
       httpOnly: true,
-      max: 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
     res.status(201).json({
       status: "success",
       message: "Usuario registrado exitosamente",
-      token,
-      user: {
-        id: user._id,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-        age: user.age,
-        role: user.role,
-        cart: user.cart,
-      },
+      ...result,
     });
-  })(req, res, next);
+  } catch (error) {
+    res.status(400).json({
+      status: "error",
+      message: error.message,
+    });
+  }
 };
 
-export const login = (req, res, next) => {
-  passport.authenticate("login", { session: false }, (err, user, info) => {
-    if (err) {
-      return res.status(500).json({
-        status: "error",
-        message: "Error en el login",
-        error: err.message,
-      });
-    }
+export const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const result = await UserService.login(email, password);
 
-    if (!user) {
-      return res.status(401).json({
-        status: "error",
-        message: info?.message || "Credenciales inválidas",
-      });
-    }
-
-    console.log("🔍 Usuario encontrado:", {
-      id: user._id,
-      email: user.email,
-      role: user.role, // 👈 Verifica qué rol tiene aquí
-    });
-
-    const token = generateToken({
-      id: user._id,
-      email: user.email,
-      role: user.role,
-    });
-
-    console.log("🔑 Token generado:", token);
-    console.log("📦 Token decodificado:", jwt.decode(token));
-
-    res.cookie("token", token, {
+    res.cookie("token", result.token, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
     });
@@ -87,18 +35,14 @@ export const login = (req, res, next) => {
     res.json({
       status: "success",
       message: "Login exitoso",
-      token,
-      user: {
-        id: user._id,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-        age: user.age,
-        role: user.role,
-        cart: user.cart,
-      },
+      ...result,
     });
-  })(req, res, next);
+  } catch (error) {
+    res.status(401).json({
+      status: "error",
+      message: error.message,
+    });
+  }
 };
 
 export const logout = (req, res) => {
@@ -109,22 +53,21 @@ export const logout = (req, res) => {
   });
 };
 
-export const current = (req, res) => {
-  res.json({
-    status: "success",
-    message: "Usuario autenticado",
-    user: {
-      id: req.user._id,
-      first_name: req.user.first_name,
-      last_name: req.user.last_name,
-      email: req.user.email,
-      age: req.user.age,
-      role: req.user.role,
-      cart: req.user.cart,
-      createdAt: req.user.createdAt,
-      updatedAt: req.user.updatedAt,
-    },
-  });
+export const current = async (req, res) => {
+  try {
+    const userDTO = await UserService.getCurrentUser(req.user._id);
+
+    res.json({
+      status: "success",
+      message: "Usuario autenticado",
+      user: userDTO,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
 };
 
 export default {

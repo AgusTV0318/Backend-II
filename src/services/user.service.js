@@ -13,7 +13,7 @@ class UserService {
   async register(userData) {
     const { first_name, last_name, email, age, password, role } = userData;
 
-    if (!first_name || last_name || !email || !age || !password) {
+    if (!first_name || !last_name || !email || !age || !password) {
       throw new Error("Faltan campos obligatorios");
     }
 
